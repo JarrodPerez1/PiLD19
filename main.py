@@ -1,8 +1,7 @@
 import serial
-
+import os
 
 port = serial.Serial('/dev/serial0', baudrate=230400, timeout=3.0, parity='N', stopbits=1)
-
 
 class DataPoint:
 
@@ -12,7 +11,6 @@ class DataPoint:
 
     def print(self):
         print('\tDistance: %d, Intensity: %d' % (self.distance, self.intensity))
-
 
 class LidarFrame:
 
@@ -76,6 +74,9 @@ class LidarFrame:
             tuples.append([self.data_points[i], angle])
         
         return tuples
+    
+    def clear():
+        os.system('clear')
 
 
 
@@ -88,20 +89,29 @@ while True:
     right_points  = frame.get_points_within_angles(291, 330)
 
     something_is_too_close = False
+    left_count = 0
+    center_count = 0
+    right_count = 0
     
     for point in left_points:
         if point[0].distance <= 100:
-            print('BACK OFF LEFT PEASANT!')
-            something_is_too_close = True
+            left_count += 1
+            #print('BACK OFF LEFT PEASANT!')
+            #something_is_too_close = True
 
     for point in center_points:
         if point[0].distance <= 100:
-            print('BACK OFF MIDDLE PEASANT!')
-            something_is_too_close = True
+            center_count += 1
+            #print('BACK OFF MIDDLE PEASANT!')
+            #something_is_too_close = True
 
     for point in right_points:
         if point[0].distance <= 100:
-            print('BACK OFF RIGHT PEASANT!')
-            something_is_too_close = True
+            right_count += 1
+            #print('BACK OFF RIGHT PEASANT!')
+            #something_is_too_close = True
+            
+            
+    if left_count > 
         
 
